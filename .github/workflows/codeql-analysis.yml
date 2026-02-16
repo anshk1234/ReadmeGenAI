@@ -1,0 +1,35 @@
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches: [ "main" ]      # Run on pushes to main
+  pull_request:
+    branches: [ "main" ]      # Run on pull requests targeting main
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read           # Required by the CodeQL Action
+      security-events: write   # Required to post findings
+
+    strategy:
+      matrix:
+        language: [ "javascript"] # Adjust to your repo's languages
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    - name: Run CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
