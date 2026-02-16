@@ -12,8 +12,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const repoName = resolvedParams.repo; 
-  const repoDisplayName = repoName.split("/").slice(-1)[0] ?? repoName; 
+  const repoName = resolvedParams.repo;
+  const repoDisplayName = repoName.split("/").slice(-1)[0] ?? repoName;
 
   return {
     title: `AI-Generated README for ${repoDisplayName} | ReadmeGenAI`,

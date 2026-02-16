@@ -4,12 +4,12 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SearchInput } from "@/components/Generator/SearchInput";
 import { MarkdownPreview } from "@/components/Generator/MarkdownPreview";
-import { LoadingOverlay } from "@/components/Generator/LoadingOverlay"; 
+import { LoadingOverlay } from "@/components/Generator/LoadingOverlay";
 import { navLinks } from "@/constants/navLinks";
 import { TerminalMockup } from "@/components/sections/TerminalMockup";
 
 interface GeneratePageProps {
-  repoSlug?: string; 
+  repoSlug?: string;
 }
 
 export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
@@ -75,7 +75,7 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
       {isLoading && <LoadingOverlay />}
 
       <Navbar links={navLinks} />
-      
+
       <main className="pt-40 pb-20 px-4 max-w-6xl mx-auto">
         <SearchInput
           onGenerate={handleGenerate}
@@ -85,7 +85,7 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
         />
         <MarkdownPreview content={markdown} />
       </main>
-      <TerminalMockup/>
+      <TerminalMockup />
       <Footer />
     </div>
   );
