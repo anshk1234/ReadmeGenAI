@@ -17,11 +17,11 @@ jobs:
 
     strategy:
       matrix:
-        language: [ "javascript", "typescript" ] # Adjust to your repo's languages
+        language: [ "javascript"] # Adjust to your repo's languages
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
