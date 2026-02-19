@@ -1,79 +1,70 @@
-matchers:
+name: Issue Label Bot
 
-  - label: "bug"
-    keywords:
-      - "bug"
-      - "error"
-      - "crash"
-      - "not working"
-      - "fails"
+on:
+  issues:
+    types: [opened, edited]
 
-  - label: "enhancement"
-    keywords:
-      - "feature"
-      - "enhancement"
-      - "improvement"
+permissions:
+  issues: write
+  contents: read
 
-  - label: "documentation"
-    keywords:
-      - "docs"
-      - "documentation"
-      - "readme"
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-  - label: "question"
-    keywords:
-      - "question"
-      - "how to"
-      - "help"
+      - name: Apply labels based on keywords
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GH_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 << 'EOF'
+          import os, sys, yaml, json
+          from urllib.request import Request, urlopen
+          from urllib.error import HTTPError
 
-  - label: "area: frontend"
-    keywords:
-      - "ui"
-      - "frontend"
-      - "tailwind"
-      - "component"
+          token = os.environ['GITHUB_TOKEN']
+          issue_number = os.environ['ISSUE_NUMBER']
+          repo = os.environ['GH_REPOSITORY']
+          title = (os.environ.get('ISSUE_TITLE') or '').lower()
+          body = (os.environ.get('ISSUE_BODY') or '').lower()
+          text = title + ' ' + body
 
-  - label: "area: backend"
-    keywords:
-      - "api"
-      - "backend"
-      - "octokit"
-      - "server"
+          config_path = '.github/issue_label_bot.yaml'
+          try:
+              with open(config_path) as f:
+                  config = yaml.safe_load(f)
+          except FileNotFoundError:
+              print(f'Error: config file not found at {config_path}', file=sys.stderr)
+              sys.exit(1)
+          except yaml.YAMLError as e:
+              print(f'Error: failed to parse {config_path}: {e}', file=sys.stderr)
+              sys.exit(1)
 
-  - label: "area: ai-logic"
-    keywords:
-      - "gemini"
-      - "prompt"
-      - "token"
-      - "model response"
+          labels_to_add = []
+          for matcher in config['matchers']:
+              if any(kw.lower() in text for kw in matcher['keywords']):
+                  labels_to_add.append(matcher['label'])
 
-  - label: "typescript"
-    keywords:
-      - "typescript"
-      - "ts"
-      - "interface"
-
-  - label: "javascript"
-    keywords:
-      - "javascript"
-      - "js"
-
-  - label: "ci/cd"
-    keywords:
-      - "ci"
-      - "cd"
-      - "workflow"
-      - "deploy"
-
-  - label: "security"
-    keywords:
-      - "security"
-      - "vulnerability"
-      - "api key"
-
-  - label: "priority: high"
-    keywords:
-      - "urgent"
-      - "asap"
-      - "high priority"
-      - "blocking"
+          if labels_to_add:
+              url = f'https://api.github.com/repos/{repo}/issues/{issue_number}/labels'
+              data = json.dumps({'labels': labels_to_add}).encode()
+              req = Request(url, data=data, headers={
+                  'Authorization': f'Bearer {token}',
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/vnd.github+json',
+                  'X-GitHub-Api-Version': '2022-11-28'
+              })
+              try:
+                  with urlopen(req) as resp:
+                      print(f'Added labels: {labels_to_add}')
+              except HTTPError as e:
+                  print(f'Error: GitHub API returned {e.code}: {e.read().decode()}', file=sys.stderr)
+                  sys.exit(1)
+          else:
+              print('No matching labels found.')
+          EOF
