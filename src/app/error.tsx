@@ -1,8 +1,14 @@
-'use client';
+"use client";
 
-import React, { useEffect } from 'react';
-import { AlertCircle, RefreshCw, Home, Terminal, ShieldAlert } from 'lucide-react';
-import Link from 'next/link';
+import React, { useEffect } from "react";
+import {
+  AlertCircle,
+  RefreshCw,
+  Home,
+  Terminal,
+  ShieldAlert,
+} from "lucide-react";
+import Link from "next/link";
 
 interface ErrorProps {
   error?: Error & { digest?: string };
@@ -13,24 +19,23 @@ interface ErrorProps {
 export default function App({ error, reset }: ErrorProps) {
   useEffect(() => {
     if (error) {
-      console.error('Captured Error:', error);
+      console.error("Captured Error:", error);
     }
   }, [error]);
 
   // Fallback values in case props are undefined during a manual preview or direct render
-  const errorMessage = error?.message || "An unexpected system interruption occurred.";
+  const errorMessage =
+    error?.message || "An unexpected system interruption occurred.";
   const errorDigest = error?.digest || "N/A";
   const handleReset = reset || (() => window.location.reload());
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-red-500/30 font-sans antialiased flex flex-col items-center justify-center relative overflow-hidden px-6">
-      
       {/* Background Glows - Red/Amber for Error Context */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-red-500/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <main className="z-10 flex flex-col items-center justify-center text-center max-w-4xl py-20">
-        
         {/* Error Badge - Replicating the style from mainpage.png */}
         <div className="mb-8 flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/20 bg-red-500/5 text-red-400 text-xs font-semibold uppercase tracking-wider animate-pulse">
           <AlertCircle size={14} />
@@ -46,20 +51,23 @@ export default function App({ error, reset }: ErrorProps) {
         </h1>
 
         <p className="max-w-md mx-auto text-gray-400 text-lg md:text-xl mb-10 leading-relaxed">
-          An unexpected error occurred during the generation process. 
-          The codebase remains secure, but the current operation was halted.
+          An unexpected error occurred during the generation process. The
+          codebase remains secure, but the current operation was halted.
         </p>
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-16">
-          <button 
+          <button
             onClick={handleReset}
             className="group flex items-center gap-2 px-8 py-3 bg-white text-black rounded-full font-bold text-lg hover:bg-gray-200 transition-all shadow-[0_0_30px_rgba(255,55,55,0.25)] active:scale-95"
           >
-            <RefreshCw size={20} className="group-hover:rotate-180 transition-transform duration-700" />
+            <RefreshCw
+              size={20}
+              className="group-hover:rotate-180 transition-transform duration-700"
+            />
             Try Again
           </button>
-          <Link 
+          <Link
             href="/"
             className="flex items-center gap-2 px-8 py-3 bg-transparent text-white border border-white/20 rounded-full font-bold text-lg hover:bg-white/5 transition-all active:scale-95"
           >
@@ -83,8 +91,12 @@ export default function App({ error, reset }: ErrorProps) {
           </div>
           <div className="p-6 font-mono text-sm text-left space-y-3 leading-relaxed">
             <div className="flex gap-2">
-              <span className="text-red-400 font-bold shrink-0">[CRITICAL]</span>
-              <span className="text-gray-300 wrap-break-word">{errorMessage}</span>
+              <span className="text-red-400 font-bold shrink-0">
+                [CRITICAL]
+              </span>
+              <span className="text-gray-300 wrap-break-word">
+                {errorMessage}
+              </span>
             </div>
             <div className="pl-4 border-l border-red-500/30 space-y-1">
               <div className="text-gray-500 text-xs flex justify-between">
@@ -93,7 +105,9 @@ export default function App({ error, reset }: ErrorProps) {
               </div>
               <div className="text-gray-500 text-xs flex justify-between">
                 <span>timestamp:</span>
-                <span className="text-gray-400">{new Date().toISOString().split('T')[1].split('.')[0]} UTC</span>
+                <span className="text-gray-400">
+                  {new Date().toISOString().split("T")[1].split(".")[0]} UTC
+                </span>
               </div>
               <div className="text-gray-500 text-xs flex justify-between">
                 <span>module:</span>
@@ -102,7 +116,9 @@ export default function App({ error, reset }: ErrorProps) {
             </div>
             <div className="flex gap-2 text-blue-400/80 pt-2">
               <span>➜</span>
-              <span className="text-gray-400 italic">Self-healing protocol initiated...</span>
+              <span className="text-gray-400 italic">
+                Self-healing protocol initiated...
+              </span>
             </div>
             <div className="flex gap-2 text-green-400/80">
               <span>✓</span>
@@ -113,24 +129,28 @@ export default function App({ error, reset }: ErrorProps) {
 
         {/* Replicating feature-page.png style for secondary info */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl">
-           <div className="p-4 rounded-xl border border-white/5 bg-white/2 flex items-center gap-4 text-left group hover:border-red-500/20 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                <ShieldAlert size={20} className="text-red-400" />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm">IP Protected</h4>
-                <p className="text-xs text-gray-500">Your code was not compromised during this crash.</p>
-              </div>
-           </div>
-           <div className="p-4 rounded-xl border border-white/5 bg-white/2 flex items-center gap-4 text-left group hover:border-orange-500/20 transition-colors">
-              <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                <RefreshCw size={20} className="text-orange-400" />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm">State Recovery</h4>
-                <p className="text-xs text-gray-500">Cache has been purged to prevent recursive errors.</p>
-              </div>
-           </div>
+          <div className="p-4 rounded-xl border border-white/5 bg-white/2 flex items-center gap-4 text-left group hover:border-red-500/20 transition-colors">
+            <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <ShieldAlert size={20} className="text-red-400" />
+            </div>
+            <div>
+              <h4 className="font-bold text-sm">IP Protected</h4>
+              <p className="text-xs text-gray-500">
+                Your code was not compromised during this crash.
+              </p>
+            </div>
+          </div>
+          <div className="p-4 rounded-xl border border-white/5 bg-white/2 flex items-center gap-4 text-left group hover:border-orange-500/20 transition-colors">
+            <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <RefreshCw size={20} className="text-orange-400" />
+            </div>
+            <div>
+              <h4 className="font-bold text-sm">State Recovery</h4>
+              <p className="text-xs text-gray-500">
+                Cache has been purged to prevent recursive errors.
+              </p>
+            </div>
+          </div>
         </div>
       </main>
 
