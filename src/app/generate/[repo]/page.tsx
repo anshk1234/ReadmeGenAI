@@ -3,7 +3,7 @@ import GeneratePageClient from "@/app/generate/GeneratePageClient";
 
 interface PageProps {
   params: Promise<{
-    repo: string; 
+    repo: string;
   }>;
 }
 

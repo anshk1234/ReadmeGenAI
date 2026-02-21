@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import styles from './loading.module.css';
+import styles from "./loading.module.css";
 
 export default function Loading() {
   const dots = Array.from({ length: 12 });
@@ -31,13 +31,13 @@ export default function Loading() {
           </h2>
           <div className="flex flex-col items-center gap-2">
             <p className="text-[11px] text-gray-400 font-mono tracking-[0.2em] uppercase max-w-60 leading-relaxed">
-              Synchronizing with <span className="text-blue-400">core.engine</span>
+              Synchronizing with{" "}
+              <span className="text-blue-400">core.engine</span>
             </p>
             <div className="w-12 h-px bg-linear-to-r from-transparent via-blue-500/50 to-transparent"></div>
           </div>
         </div>
       </main>
-
     </div>
   );
 }
