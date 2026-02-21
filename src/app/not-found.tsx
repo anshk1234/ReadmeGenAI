@@ -45,8 +45,8 @@ export default function NotFound() {
             >
               <Home size={20} />
               Back to Safety
-            </Button>
-          </Link>
+            </Link>
+          </Button>
 
           <Button
             variant="outline"
