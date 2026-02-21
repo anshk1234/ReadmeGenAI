@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AlertCircle,
   RefreshCw,
@@ -17,6 +17,10 @@ interface ErrorProps {
 
 // In this environment, the main component must be named App and be the default export
 export default function App({ error, reset }: ErrorProps) {
+  const [errorTime] = useState(() =>
+    new Date().toISOString().split("T")[1].split(".")[0]
+  );
+
   useEffect(() => {
     if (error) {
       console.error("Captured Error:", error);
@@ -106,24 +110,28 @@ export default function App({ error, reset }: ErrorProps) {
               <div className="text-gray-500 text-xs flex justify-between">
                 <span>timestamp:</span>
                 <span className="text-gray-400">
-                  {new Date().toISOString().split("T")[1].split(".")[0]} UTC
+                  {errorTime} UTC
                 </span>
               </div>
               <div className="text-gray-500 text-xs flex justify-between">
                 <span>module:</span>
-                <span className="text-gray-400">core/generator-v2.bin</span>
+                <span className="text-gray-400">{error?.name ?? "Error"}</span>
               </div>
             </div>
-            <div className="flex gap-2 text-blue-400/80 pt-2">
-              <span>➜</span>
-              <span className="text-gray-400 italic">
-                Self-healing protocol initiated...
-              </span>
-            </div>
-            <div className="flex gap-2 text-green-400/80">
-              <span>✓</span>
-              <span>Workspace state preserved. Ready for manual reset.</span>
-            </div>
+            {process.env.NODE_ENV === "development" && (
+              <>
+                <div className="flex gap-2 text-blue-400/80 pt-2">
+                  <span>➜</span>
+                  <span className="text-gray-400 italic">
+                    Self-healing protocol initiated...
+                  </span>
+                </div>
+                <div className="flex gap-2 text-green-400/80">
+                  <span>✓</span>
+                  <span>Workspace state preserved. Ready for manual reset.</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -147,7 +155,7 @@ export default function App({ error, reset }: ErrorProps) {
             <div>
               <h4 className="font-bold text-sm">State Recovery</h4>
               <p className="text-xs text-gray-500">
-                Cache has been purged to prevent recursive errors.
+                Click &quot;Try Again&quot; to retry the failed operation.
               </p>
             </div>
           </div>
