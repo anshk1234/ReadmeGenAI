@@ -1,106 +1,118 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { Terminal, Code2, Cpu } from 'lucide-react';
+export default function LoadingOverlay() {
+  const [loadingStep, setLoadingStep] = useState(0);
 
-export const LoadingOverlay = () => {
-  const [terminalText, setTerminalText] = useState("");
-  const fullText = "INITIALIZING_NEURAL_ENGINE... [OK]";
+  const steps = [
+    "Initializing neural engine...",
+    "Scanning repository structure...",
+    "Analyzing codebase patterns...",
+    "Generating professional documentation...",
+    "Finalizing markdown output..."
+  ];
 
   useEffect(() => {
-    let i = 0;
     const interval = setInterval(() => {
-      setTerminalText(fullText.slice(0, i));
-      i++;
-      if (i > fullText.length) i = 0;
-    }, 100);
+      setLoadingStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
+    }, 800);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [steps.length]);
 
   return (
-    <div className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-[#050505] font-mono">
-      {/* BACKGROUND GRID EFFECT */}
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage:
-            "linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      ></div>
+<div className="fixed inset-0 z-9999 bg-black text-white selection:bg-blue-500/30 font-sans antialiased flex flex-col items-center justify-center overflow-hidden px-6">
+      {/* Background Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      {/* RING CONTAINER */}
-      <div className="relative flex h-64 w-64 items-center justify-center">
-        {/* Chromatic Orbiting Rings */}
-        <div className="absolute h-36 w-36 rounded-full border border-red-500/40 mix-blend-screen blur-[2px] animate-[ring-pulse_4s_linear_infinite] scale-110"></div>
-        <div className="absolute h-36 w-36 rounded-full border border-emerald-400/40 mix-blend-screen blur-[2px] animate-[ring-pulse_4s_linear_infinite_1s] scale-105"></div>
-        <div className="absolute h-36 w-36 rounded-full border border-indigo-500/40 mix-blend-screen blur-[2px] animate-[ring-pulse_4s_linear_infinite_2s] scale-110"></div>
+      <main className="z-10 flex flex-col items-center justify-center text-center max-w-4xl w-full">
+        {/* Hero Loading Text */}
+        <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-4 leading-tight">
+          Crafting your <br />
+          <span className="bg-linear-to-b from-white to-gray-500 bg-clip-text text-transparent">
+            documentation.
+          </span>
+        </h1>
 
-        {/* Technical Inner Ring */}
-        <div className="absolute h-28 w-28 rounded-full border border-dashed border-white/20 animate-spin-slow"></div>
-
-        {/* Core White Ring */}
-        <div className="absolute h-32 w-32 rounded-full border-2 border-white shadow-[0_0_30px_rgba(255,255,255,0.2)] animate-[ring-pulse_3s_ease-in-out_infinite]"></div>
-
-        {/* Binary Data Bits (Decorative) */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-40 text-[8px] text-emerald-500 pointer-events-none">
-          <div className="animate-pulse">01011001</div>
-        </div>
-      </div>
-
-      {/* CODING VIBE TEXT ELEMENTS */}
-      <div className="mt-8 flex flex-col items-center gap-4 z-10">
-        <div className="flex flex-col items-center">
-          <p className="text-xs tracking-[0.5em] text-zinc-500 uppercase mb-1">
-            System Status
-          </p>
-          <div className="flex items-baseline gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <p className="text-xl font-bold tracking-tighter text-white">
-              {terminalText}
-              <span className="animate-bounce">_</span>
-            </p>
-          </div>
+        <div className="flex items-center gap-3 text-gray-400 font-medium mb-12 h-6">
+          <span className="inline-block w-4 h-4 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></span>
+          <span className="animate-in fade-in slide-in-from-bottom-1 duration-300">
+            {steps[loadingStep]}
+          </span>
         </div>
 
-        {/* DATA METRICS FOOTER */}
-        <div className="mt-4 grid grid-cols-3 gap-8 text-[10px] text-zinc-600 border-t border-zinc-800 pt-4 uppercase tracking-widest">
-          <div className="flex flex-col items-center">
-            <span>CPU</span>
-            <span className="text-emerald-400">88.4%</span>
+        {/* Simulation Terminal */}
+        <div className="w-full max-w-xl bg-[#0a0a0a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+          <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5 text-[10px] font-mono text-gray-500 tracking-widest uppercase">
+            <div className="flex gap-1.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Terminal size={12} />
+              <span>AI_RUNTIME_STATUS</span>
+            </div>
           </div>
-          <div className="flex flex-col items-center border-x border-zinc-800 px-8">
-            <span>MEM</span>
-            <span className="text-indigo-400">12GB</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span>PING</span>
-            <span className="text-red-400">14MS</span>
+          <div className="p-6 font-mono text-xs text-left space-y-2 leading-relaxed h-40 overflow-hidden">
+            <div className="flex gap-2 text-blue-400/80">
+              <span className="shrink-0">[INFO]</span>
+              <span className="text-gray-400">Loading generative weights... OK</span>
+            </div>
+            <div className="flex gap-2 text-blue-400/80">
+              <span className="shrink-0">[INFO]</span>
+              <span className="text-gray-400">Context window initialized (128k tokens)</span>
+            </div>
+            {loadingStep >= 1 && (
+              <div className="flex gap-2 text-green-400/80 animate-in fade-in duration-300">
+                <span className="shrink-0">[SUCCESS]</span>
+                <span className="text-gray-400">Repository tree parsed: 42 files found</span>
+              </div>
+            )}
+            {loadingStep >= 2 && (
+              <div className="flex gap-2 text-green-400/80 animate-in fade-in duration-300">
+                <span className="shrink-0">[SUCCESS]</span>
+                <span className="text-gray-400">Exporting vector embeddings...</span>
+              </div>
+            )}
+            {loadingStep >= 3 && (
+              <div className="flex gap-2 text-purple-400 animate-in fade-in duration-300">
+                <span className="shrink-0">[PROCESS]</span>
+                <span className="text-gray-300 animate-pulse">Generating README.md via LLM-v4...</span>
+              </div>
+            )}
+            <div className="pt-1">
+              <span className="text-blue-500">➜</span>
+              <span className="w-2 h-4 bg-white/20 inline-block animate-pulse align-middle ml-1"></span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes ring-pulse {
-          0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
-          50% { transform: scale(1.1) rotate(180deg); opacity: 0.7; }
-        }
-        .animate-spin-slow {
-          animation: spin 10s linear infinite;
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .mix-blend-screen {
-          mix-blend-mode: screen;
-        }
-      `,
-        }}
-      />
+        {/* Feature Hints */}
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-xl">
+          <div className="p-3 rounded-lg border border-white/5 bg-white/2 flex items-center gap-3 text-left">
+            <div className="w-8 h-8 rounded bg-blue-500/10 flex items-center justify-center shrink-0">
+              <Cpu size={16} className="text-blue-400" />
+            </div>
+            <div>
+              <h4 className="font-bold text-[11px] uppercase tracking-wider text-gray-400">Pro Tip</h4>
+              <p className="text-xs text-gray-500">Add a .readmegenai config for custom styles.</p>
+            </div>
+          </div>
+          <div className="p-3 rounded-lg border border-white/5 bg-white/2 flex items-center gap-3 text-left">
+            <div className="w-8 h-8 rounded bg-purple-500/10 flex items-center justify-center shrink-0">
+              <Code2 size={16} className="text-purple-400" />
+            </div>
+            <div>
+              <h4 className="font-bold text-[11px] uppercase tracking-wider text-gray-400">Integration</h4>
+              <p className="text-xs text-gray-500">Supports JS, Python, Go, and Rust natively.</p>
+            </div>
+          </div>
+        </div>
+
+      </main>
     </div>
   );
-};
-
-export default LoadingOverlay;
+}

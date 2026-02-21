@@ -4,7 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SearchInput } from "@/components/Generator/SearchInput";
 import { MarkdownPreview } from "@/components/Generator/MarkdownPreview";
-import { LoadingOverlay } from "@/components/Generator/LoadingOverlay";
+import LoadingOverlay from "@/components/Generator/LoadingOverlay";
 import { navLinks } from "@/constants/navLinks";
 import { TerminalMockup } from "@/components/sections/TerminalMockup";
 
