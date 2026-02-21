@@ -17,8 +17,8 @@ interface ErrorProps {
 
 // In this environment, the main component must be named App and be the default export
 export default function App({ error, reset }: ErrorProps) {
-  const [errorTime] = useState(() =>
-    new Date().toISOString().split("T")[1].split(".")[0]
+  const [errorTime] = useState(
+    () => new Date().toISOString().split("T")[1].split(".")[0],
   );
 
   useEffect(() => {
@@ -109,9 +109,7 @@ export default function App({ error, reset }: ErrorProps) {
               </div>
               <div className="text-gray-500 text-xs flex justify-between">
                 <span>timestamp:</span>
-                <span className="text-gray-400">
-                  {errorTime} UTC
-                </span>
+                <span className="text-gray-400">{errorTime} UTC</span>
               </div>
               <div className="text-gray-500 text-xs flex justify-between">
                 <span>module:</span>
@@ -128,7 +126,9 @@ export default function App({ error, reset }: ErrorProps) {
                 </div>
                 <div className="flex gap-2 text-green-400/80">
                   <span>✓</span>
-                  <span>Workspace state preserved. Ready for manual reset.</span>
+                  <span>
+                    Workspace state preserved. Ready for manual reset.
+                  </span>
                 </div>
               </>
             )}
