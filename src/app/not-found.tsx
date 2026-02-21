@@ -38,16 +38,15 @@ export default function NotFound() {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-          <Button
-            asChild
-            variant="primary"
-            className="w-full sm:w-auto px-10 py-4 text-lg shadow-xl shadow-white/5"
-          >
-            <Link href="/">
+          <Link href="/">
+            <Button
+              variant="primary"
+              className="w-full sm:w-auto px-10 py-4 text-lg shadow-xl shadow-white/5"
+            >
               <Home size={20} />
               Back to Safety
-            </Link>
-          </Button>
+            </Button>
+          </Link>
 
           <Button
             variant="outline"
