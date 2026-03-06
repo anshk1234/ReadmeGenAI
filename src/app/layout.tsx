@@ -36,10 +36,10 @@ export const metadata: Metadata = {
     siteName: "ReadmeGenAI",
     images: [
       {
-        url: "/og-image.png",
+        url: "/ReadmeGenAI.png",
         width: 1200,
         height: 630,
-        alt: "ReadmeGenAI - AI README Generator",
+        alt: "ReadmeGenAI - AI README Generator for GitHub Projects",
       },
     ],
     locale: "en_US",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Generate README Files with AI",
     description:
       "Paste your GitHub repository URL and get a professional readme.md instantly.",
-    images: ["/og-image.png"],
+    images: ["/ReadmeGenAI.png"],
   },
   robots: {
     index: true,

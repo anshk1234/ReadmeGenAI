@@ -9,9 +9,14 @@ import { Code, Layout, FileText } from "lucide-react";
 import { navLinks } from "@/constants/navLinks";
 
 export const metadata: Metadata = {
-  title: "AI README Generator for GitHub Projects | ReadmeGenAI",
+  title: {
+    absolute: "AI README Generator for GitHub Projects | ReadmeGenAI",
+  },
   description:
     "Instantly create professional GitHub README files with ReadmeGenAI. Our AI README generator analyzes your repo and produces polished markdown docs in seconds.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "AI README Generator for GitHub Projects | ReadmeGenAI",
     description:
