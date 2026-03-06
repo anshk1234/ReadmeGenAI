@@ -66,24 +66,36 @@ export default function RootLayout({
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://readmegen-ai.vercel.app";
 
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "ReadmeGenAI",
+    applicationCategory: "DeveloperTool",
+    operatingSystem: "Web",
+    description:
+      "AI-powered GitHub README generator that creates professional markdown documentation automatically from any public GitHub repository.",
+    url: siteUrl,
+    image: `${siteUrl}/ReadmeGenAI.png`,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    featureList: [
+      "AI-generated GitHub README files",
+      "Framework and dependency detection",
+      "Instant markdown output",
+      "GitHub Octokit integration",
+    ],
+  };
+
   return (
     <html lang="en">
       <head>
         {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              name: "ReadmeGenAI",
-              applicationCategory: "DeveloperTool",
-              operatingSystem: "Web",
-              description:
-                "AI-powered GitHub README generator that creates markdown documentation automatically.",
-              url: siteUrl,
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
         />
       </head>
       <body
