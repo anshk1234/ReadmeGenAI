@@ -1,8 +1,21 @@
-"use client";
+import type { Metadata } from "next";
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Cpu, Globe, ShieldCheck, Sparkles, Zap, Code2 } from "lucide-react";
+import { navLinks } from "@/constants/navLinks";
+
+export const metadata: Metadata = {
+  title: "Features | ReadmeGenAI",
+  description:
+    "Discover ReadmeGenAI features: AI README generator powered by Gemini, GitHub Octokit integration, instant generation, and framework-aware documentation.",
+  openGraph: {
+    title: "Features | ReadmeGenAI",
+    description:
+      "Discover ReadmeGenAI features: AI README generator powered by Gemini, GitHub Octokit integration, instant generation, and framework-aware documentation.",
+    url: "/features",
+  },
+};
 
 const features = [
   {
@@ -37,25 +50,45 @@ const features = [
   },
 ];
 
-export default function FeaturesPage() {
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Features", href: "/features" },
-    { name: "Examples", href: "/examples" },
-    { name: "Docs", href: "/docs" },
-  ];
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://readmegen-ai.vercel.app/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Features",
+      item: "https://readmegen-ai.vercel.app/features",
+    },
+  ],
+};
 
+export default function FeaturesPage() {
   return (
     <div className="min-h-screen bg-black text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Navbar links={navLinks} />
       <main className="pt-32 pb-20 px-4">
         <div className="max-w-5xl mx-auto text-center mb-20">
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6">
-            Documentation <br />
+            AI README Generator <br />
             <span className="bg-clip-text text-transparent bg-linear-to-b from-white to-white/40">
               reimagined.
             </span>
           </h1>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Everything ReadmeGenAI offers to make your GitHub README stand out—
+            powered by AI, built for developers.
+          </p>
         </div>
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
