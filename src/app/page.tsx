@@ -1,11 +1,23 @@
-"use client";
+import type { Metadata } from "next";
 import React from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/sections/Hero";
 import { Features } from "@/components/sections/Features";
+import { SEOSection } from "@/components/sections/SEOSection";
 import { Footer } from "@/components/layout/Footer";
 import { Code, Layout, FileText } from "lucide-react";
 import { navLinks } from "@/constants/navLinks";
+
+export const metadata: Metadata = {
+  title: "AI README Generator for GitHub Projects | ReadmeGenAI",
+  description:
+    "Instantly create professional GitHub README files with ReadmeGenAI. Our AI README generator analyzes your repo and produces polished markdown docs in seconds.",
+  openGraph: {
+    title: "AI README Generator for GitHub Projects | ReadmeGenAI",
+    description:
+      "Instantly create professional GitHub README files with ReadmeGenAI. Our AI README generator analyzes your repo and produces polished markdown docs in seconds.",
+  },
+};
 
 export default function Home() {
   const featureList = [
@@ -32,6 +44,8 @@ export default function Home() {
 
       <main>
         <Hero />
+
+        <SEOSection />
 
         {/* Removed the wrapper div that had the duplicate id="features" */}
         <Features items={featureList} />
