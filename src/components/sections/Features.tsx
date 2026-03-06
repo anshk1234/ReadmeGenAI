@@ -9,6 +9,15 @@ interface FeatureItem {
 export const Features = ({ items }: { items: FeatureItem[] }) => (
   <section id="features" className="py-24 border-t border-white/5 bg-black">
     <div className="max-w-7xl mx-auto px-4">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter mb-4 text-white">
+          Everything You Need in an AI README Generator
+        </h2>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          From context detection to clean markdown output, ReadmeGenAI handles
+          every step of the GitHub README generation process.
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {items.map((feature, idx) => (
           <div

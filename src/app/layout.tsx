@@ -18,20 +18,20 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || "https://readmegen-ai.vercel.app",
   ),
   title: {
-    default: "ReadmeGenAI – AI GitHub README Generator",
+    default: "AI README Generator for GitHub Projects | ReadmeGenAI",
     template: "%s | ReadmeGenAI",
   },
   description:
-    "ReadmeGenAI is an AI-powered tool that automatically generates professional README files for your GitHub projects. Paste your repo URL and get a polished readme.md instantly.",
+    "Instantly create professional GitHub README files with ReadmeGenAI. Our AI README generator analyzes your repo and produces polished markdown docs in seconds.",
   icons: {
     icon: "/ReadmeGenAI.png",
     shortcut: "/ReadmeGenAI.png",
     apple: "/ReadmeGenAI.png",
   },
   openGraph: {
-    title: "ReadmeGenAI – AI GitHub README Generator",
+    title: "AI README Generator for GitHub Projects | ReadmeGenAI",
     description:
-      "Automatically generate professional README files from your GitHub repositories using AI.",
+      "Instantly create professional GitHub README files with ReadmeGenAI. Our AI README generator analyzes your repo and produces polished markdown docs in seconds.",
     url: "/",
     siteName: "ReadmeGenAI",
     images: [

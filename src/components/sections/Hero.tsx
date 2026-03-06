@@ -17,17 +17,20 @@ export const Hero = () => {
 
         {/* Headline */}
         <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter mb-8 leading-[1.1] animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          Ship documentation <br />
+          Generate GitHub README files <br />
           <span className="bg-clip-text text-transparent bg-linear-to-b from-white to-white/40">
-            as fast as your code.
+            with AI, in seconds.
           </span>
         </h1>
 
-        {/* Sub-headline */}
+        {/* Sub-headline / Intro paragraph */}
         <p className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-5 duration-1000">
-          ReadmeGenAI scans your repository and crafts professional, engaging
-          README files automatically. The perfect intro for your next big
-          project.
+          ReadmeGenAI is the ultimate AI README generator for GitHub projects.
+          Paste your repository URL and our AI analyzes your code, detects your
+          tech stack, and produces a professional GitHub README in seconds.
+          Powered by Google Gemini, it handles everything from installation
+          guides to feature descriptions—giving your documentation the polish it
+          deserves.
         </p>
 
         {/* CTA Buttons - Fixed Routing */}
