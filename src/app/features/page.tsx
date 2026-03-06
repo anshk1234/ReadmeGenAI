@@ -6,9 +6,12 @@ import { Cpu, Globe, ShieldCheck, Sparkles, Zap, Code2 } from "lucide-react";
 import { navLinks } from "@/constants/navLinks";
 
 export const metadata: Metadata = {
-  title: "Features | ReadmeGenAI",
+  title: { absolute: "Features | ReadmeGenAI" },
   description:
     "Discover ReadmeGenAI features: AI README generator powered by Gemini, GitHub Octokit integration, instant generation, and framework-aware documentation.",
+  alternates: {
+    canonical: "/features",
+  },
   openGraph: {
     title: "Features | ReadmeGenAI",
     description:

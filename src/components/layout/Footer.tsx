@@ -16,7 +16,9 @@ export const Footer = () => (
 
       <div className="flex gap-6 items-center">
         <a
-          href="#"
+          href="https://github.com/BeyteFlow/ReadmeGenAI"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="GitHub"
           className="text-zinc-500 hover:text-white transition-colors"
         >

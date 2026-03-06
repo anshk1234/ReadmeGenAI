@@ -7,9 +7,12 @@ import { FAQ } from "@/components/docs/FAQ";
 import { navLinks } from "@/constants/navLinks";
 
 export const metadata: Metadata = {
-  title: "Documentation | ReadmeGenAI",
+  title: { absolute: "Documentation | ReadmeGenAI" },
   description:
     "Learn how to use ReadmeGenAI, the AI README generator for GitHub. Quick-start guides, API docs, FAQs, and tips for perfect GitHub README files.",
+  alternates: {
+    canonical: "/docs",
+  },
   openGraph: {
     title: "Documentation | ReadmeGenAI",
     description:

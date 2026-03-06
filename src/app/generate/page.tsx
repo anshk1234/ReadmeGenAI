@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import GeneratePageClient from "./GeneratePageClient";
 
 export const metadata: Metadata = {
-  title: "Generate README | ReadmeGenAI",
+  title: { absolute: "Generate README | ReadmeGenAI" },
   description:
     "Paste any GitHub repository URL and instantly generate a polished, professional README with ReadmeGenAI — the free AI README generator for developers.",
+  alternates: {
+    canonical: "/generate",
+  },
   openGraph: {
     title: "Generate README | ReadmeGenAI",
     description:

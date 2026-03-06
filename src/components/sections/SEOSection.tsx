@@ -32,9 +32,9 @@ export const SEOSection = () => (
 
       {/* Feature bullet points */}
       <div className="mb-16">
-        <h2 className="text-2xl md:text-3xl font-extrabold tracking-tighter mb-8 text-white">
+        <h3 className="text-2xl md:text-3xl font-extrabold tracking-tighter mb-8 text-white">
           Key Benefits of ReadmeGenAI
-        </h2>
+        </h3>
         <ul className="space-y-4">
           {benefits.map((benefit, idx) => (
             <li key={idx} className="flex items-start gap-3">
@@ -53,9 +53,9 @@ export const SEOSection = () => (
       {/* Additional H2 subheadings for keyword coverage */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
             Instant GitHub README Generation
-          </h2>
+          </h3>
           <p className="text-gray-400 text-sm leading-relaxed">
             Paste any public GitHub repository URL and receive a fully
             structured README in seconds. No templates to fill in, no markdown
@@ -64,9 +64,9 @@ export const SEOSection = () => (
         </div>
 
         <div>
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
             Smart Codebase &amp; Framework Detection
-          </h2>
+          </h3>
           <p className="text-gray-400 text-sm leading-relaxed">
             Our GitHub README generator automatically identifies your
             dependencies, frameworks, and project structure to produce accurate,
@@ -75,9 +75,9 @@ export const SEOSection = () => (
         </div>
 
         <div>
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
             GitHub Best Practices, Built In
-          </h2>
+          </h3>
           <p className="text-gray-400 text-sm leading-relaxed">
             Every AI README follows GitHub&apos;s formatting standards—badges,
             installation instructions, usage examples, and contribution
@@ -86,9 +86,9 @@ export const SEOSection = () => (
         </div>
 
         <div>
-          <h2 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-3 text-white">
             Free AI README Generator for Every Developer
-          </h2>
+          </h3>
           <p className="text-gray-400 text-sm leading-relaxed">
             ReadmeGenAI is free to use for all public repositories. Whether
             you&apos;re a solo developer or an open-source maintainer, quality
