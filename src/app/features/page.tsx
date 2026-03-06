@@ -110,4 +110,3 @@ export default function FeaturesPage() {
     </div>
   );
 }
-

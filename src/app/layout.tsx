@@ -95,7 +95,9 @@ export default function RootLayout({
         {/* JSON-LD structured data */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(softwareAppJsonLd),
+          }}
         />
       </head>
       <body
