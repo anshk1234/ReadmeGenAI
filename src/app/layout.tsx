@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import pkg from "../../package.json";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -71,22 +72,39 @@ export default function RootLayout({
     "@type": "SoftwareApplication",
     name: "ReadmeGenAI",
     applicationCategory: "DeveloperTool",
+    applicationSubCategory: "Documentation Generator",
     operatingSystem: "Web",
     description:
       "AI-powered GitHub README generator that creates professional markdown documentation automatically from any public GitHub repository.",
     url: siteUrl,
     image: `${siteUrl}/ReadmeGenAI.png`,
+    screenshot: `${siteUrl}/ReadmeGenAI.png`,
+    softwareVersion: pkg.version,
+    datePublished: "2024-01-01",
+    inLanguage: "en",
+    keywords:
+      "AI README generator, GitHub documentation, markdown generator, README automation, developer tool",
+    author: {
+      "@type": "Organization",
+      name: "BeyteFlow",
+      url: "https://github.com/BeyteFlow",
+    },
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
+      availability: "https://schema.org/OnlineOnly",
+      url: siteUrl,
     },
     featureList: [
       "AI-generated GitHub README files",
       "Framework and dependency detection",
       "Instant markdown output",
       "GitHub Octokit integration",
+      "Automated tech stack analysis",
+      "Professional markdown formatting",
     ],
+    sameAs: ["https://github.com/BeyteFlow/ReadmeGenAI"],
   };
 
   return (
