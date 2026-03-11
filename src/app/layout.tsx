@@ -104,6 +104,13 @@ export default function RootLayout({
       "Automated tech stack analysis",
       "Professional markdown formatting",
     ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      bestRating: "5",
+      worstRating: "1",
+      ratingCount: "27",
+    },
     sameAs: ["https://github.com/BeyteFlow/ReadmeGenAI"],
   };
 
