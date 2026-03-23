@@ -76,7 +76,11 @@ export const SearchInput = ({
             className="bg-zinc-900/50 border border-white/10 rounded-2xl px-6 py-6 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all backdrop-blur-xl appearance-none cursor-pointer min-w-[140px]"
           >
             {SUPPORTED_LANGUAGES.map((lang) => (
-              <option key={lang} value={lang} className="bg-zinc-900 text-white">
+              <option
+                key={lang}
+                value={lang}
+                className="bg-zinc-900 text-white"
+              >
                 {lang}
               </option>
             ))}
