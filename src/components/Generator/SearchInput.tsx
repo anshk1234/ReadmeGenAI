@@ -51,7 +51,10 @@ export const SearchInput = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-4">
-      <form onSubmit={handleSubmit} className="relative group flex flex-col md:flex-row gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className="relative group flex flex-col md:flex-row gap-4"
+      >
         <div className="relative flex-grow">
           <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-gray-500 group-focus-within:text-blue-500 transition-colors">
             <Github size={20} />
@@ -78,7 +81,11 @@ export const SearchInput = ({
             className="bg-zinc-900/50 border border-white/10 rounded-2xl px-6 py-6 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all backdrop-blur-xl appearance-none cursor-pointer min-w-[140px]"
           >
             {languages.map((lang) => (
-              <option key={lang} value={lang} className="bg-zinc-900 text-white">
+              <option
+                key={lang}
+                value={lang}
+                className="bg-zinc-900 text-white"
+              >
                 {lang}
               </option>
             ))}

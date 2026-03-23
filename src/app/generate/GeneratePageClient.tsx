@@ -26,7 +26,10 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
     }
   }, [repoSlug]);
 
-  const handleGenerate = async (githubUrl: string, language: string = "English") => {
+  const handleGenerate = async (
+    githubUrl: string,
+    language: string = "English",
+  ) => {
     setIsLoading(true);
     setMarkdown("");
     try {
