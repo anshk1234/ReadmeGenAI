@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Loader2, Github, AlertCircle } from "lucide-react";
 import { Button } from "../ui/Button";
+import { SUPPORTED_LANGUAGES } from "@/constants/languages";
 
 interface SearchInputProps {
   onGenerate: (url: string, language: string) => void;
