@@ -6,7 +6,10 @@ export const dynamic = "force-dynamic";
 
 /**
  * AI README Generation Endpoint
- * Optimized for data accuracy and clean prompt interpolation.
+ * Optimized for data accuracy, clean prompt interpolation, and multi-language support.
+ * 
+ * @param {Request} req - The incoming Fastify request object containing the repo URL and optional language.
+ * @returns {Promise<NextResponse>} A JSON response containing the generated Markdown or an error message.
  */
 export async function POST(req: Request) {
   let rawUrl: string;

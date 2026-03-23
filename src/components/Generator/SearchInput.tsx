@@ -10,6 +10,13 @@ interface SearchInputProps {
   ariaLabel?: string; // optional aria-label for accessibility
 }
 
+/**
+ * SearchInput Component
+ * Renders a responsive form for GitHub URL input and language selection.
+ * 
+ * @param {SearchInputProps} props - The component props.
+ * @returns {JSX.Element} The rendered search input form.
+ */
 export const SearchInput = ({
   onGenerate,
   isLoading,
