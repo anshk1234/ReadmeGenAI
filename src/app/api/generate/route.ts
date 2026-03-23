@@ -1,18 +1,30 @@
 import { NextResponse } from "next/server";
 import { getGeminiModel } from "@/lib/gemini";
 import { getRepoData, getRepoContents } from "@/lib/octokit";
+import { SUPPORTED_LANGUAGES } from "@/constants/languages";
 
 export const dynamic = "force-dynamic";
 
 /**
  * AI README Generation Endpoint
- * Optimized for data accuracy and clean prompt interpolation.
+ * Optimized for data accuracy, clean prompt interpolation, and multi-language support.
+ *
+ * @param {Request} req - The incoming request object containing the repo URL and optional language.
+ * @returns {Promise<NextResponse>} A JSON response containing the generated Markdown or an error message.
  */
 export async function POST(req: Request) {
   let rawUrl: string;
+  let language: string;
   try {
     const body = await req.json();
     rawUrl = body.url;
+    const rawLanguage =
+      typeof body.language === "string" ? body.language.trim() : "";
+    const normalized =
+      rawLanguage.charAt(0).toUpperCase() + rawLanguage.slice(1).toLowerCase();
+    language = (SUPPORTED_LANGUAGES as readonly string[]).includes(normalized)
+      ? normalized
+      : "English";
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
@@ -96,7 +108,7 @@ export async function POST(req: Request) {
     // Fix: Prompt updated with neutral fallbacks and dynamic license
     const prompt = `
 **Role**: You are a Principal Solutions Architect and World-Class Technical Writer. 
-**Task**: Generate a professional, high-conversion README.md for the GitHub repository: "${repo}".
+**Task**: Generate a professional, high-conversion README.md for the GitHub repository: "${repo}" in the following language: **${language}**.
 
 ---
 ### 1. PROJECT CONTEXT (VERIFIED DATA)
