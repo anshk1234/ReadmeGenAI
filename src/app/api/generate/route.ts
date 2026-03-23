@@ -10,9 +10,11 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(req: Request) {
   let rawUrl: string;
+  let language: string;
   try {
     const body = await req.json();
     rawUrl = body.url;
+    language = body.language || "English";
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
@@ -96,7 +98,7 @@ export async function POST(req: Request) {
     // Fix: Prompt updated with neutral fallbacks and dynamic license
     const prompt = `
 **Role**: You are a Principal Solutions Architect and World-Class Technical Writer. 
-**Task**: Generate a professional, high-conversion README.md for the GitHub repository: "${repo}".
+**Task**: Generate a professional, high-conversion README.md for the GitHub repository: "${repo}" in the following language: **${language}**.
 
 ---
 ### 1. PROJECT CONTEXT (VERIFIED DATA)
