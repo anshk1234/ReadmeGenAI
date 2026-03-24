@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
  * AI README Generation Endpoint
  * Optimized for data accuracy, clean prompt interpolation, and multi-language support.
  *
- * @param {Request} req - The incoming request object containing the repo URL and optional language.
+ * @param {Request} req - The incoming Fastify request object containing the repo URL and optional language.
  * @returns {Promise<NextResponse>} A JSON response containing the generated Markdown or an error message.
  */
 export async function POST(req: Request) {
@@ -18,13 +18,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     rawUrl = body.url;
-    const rawLanguage =
-      typeof body.language === "string" ? body.language.trim() : "";
-    const normalized =
-      rawLanguage.charAt(0).toUpperCase() + rawLanguage.slice(1).toLowerCase();
-    language = (SUPPORTED_LANGUAGES as readonly string[]).includes(normalized)
-      ? normalized
-      : "English";
+    language = body.language || "English";
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
@@ -157,9 +151,12 @@ export async function POST(req: Request) {
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const markdown = response.text();
+    const markdown = response.text().trim();
+    const cleanMarkdown = markdown
+      .replace(/^```(markdown|md)?\n/, "")
+      .replace(/\n```$/, "");
 
-    return NextResponse.json({ markdown });
+    return NextResponse.json({ markdown: cleanMarkdown });
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : "Internal Server Error";
