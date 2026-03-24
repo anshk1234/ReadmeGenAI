@@ -33,7 +33,7 @@ ReadmeGenAI eliminates this friction by leveraging advanced AI to automatically 
   <img src="assets/mainpage.png" alt="Main Page" width="600"/>
   <br>
   <br>
-  <img src="assets/fearture-page.png" alt="Feature Page" width="600"/>
+  <img src="assets/feature-page.png" alt="Feature Page" width="600"/>
 </p>
 
 ## Technical Architecture
