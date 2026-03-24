@@ -152,7 +152,9 @@ export async function POST(req: Request) {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const markdown = response.text().trim();
-    const cleanMarkdown = markdown.replace(/^```(markdown|md)?\n/, "").replace(/\n```$/, "");
+    const cleanMarkdown = markdown
+      .replace(/^```(markdown|md)?\n/, "")
+      .replace(/\n```$/, "");
 
     return NextResponse.json({ markdown: cleanMarkdown });
   } catch (error: unknown) {
