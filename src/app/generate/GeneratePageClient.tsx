@@ -84,7 +84,7 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           onGenerate={handleGenerate}
           isLoading={isLoading}
           initialValue={repoSlug ? `https://github.com/${repoSlug}` : ""}
-          aria-label="Enter GitHub repository URL to generate README"
+          ariaLabel="Enter GitHub repository URL to generate README"
         />
         <MarkdownPreview content={markdown} />
       </main>
