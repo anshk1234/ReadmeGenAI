@@ -1,0 +1,122 @@
+.dotContainer {
+  transform-origin: 50% 50%;
+}
+
+.dotItem {
+  animation: dotPulse 1.2s ease-in-out infinite;
+}
+
+.dotWrapper {
+  will-change: transform, opacity;
+}
+
+@keyframes dotPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+}
+
+.dotContainer:nth-child(1) {
+  transform: rotate(0deg);
+}
+
+.dotContainer:nth-child(2) {
+  transform: rotate(30deg);
+}
+
+.dotContainer:nth-child(3) {
+  transform: rotate(60deg);
+}
+
+.dotContainer:nth-child(4) {
+  transform: rotate(90deg);
+}
+
+.dotContainer:nth-child(5) {
+  transform: rotate(120deg);
+}
+
+.dotContainer:nth-child(6) {
+  transform: rotate(150deg);
+}
+
+.dotContainer:nth-child(7) {
+  transform: rotate(180deg);
+}
+
+.dotContainer:nth-child(8) {
+  transform: rotate(210deg);
+}
+
+.dotContainer:nth-child(9) {
+  transform: rotate(240deg);
+}
+
+.dotContainer:nth-child(10) {
+  transform: rotate(270deg);
+}
+
+.dotContainer:nth-child(11) {
+  transform: rotate(300deg);
+}
+
+.dotContainer:nth-child(12) {
+  transform: rotate(330deg);
+}
+
+.dotContainer:nth-child(1) .dotItem {
+  animation-delay: 0s;
+}
+
+.dotContainer:nth-child(2) .dotItem {
+  animation-delay: 0.1s;
+}
+
+.dotContainer:nth-child(3) .dotItem {
+  animation-delay: 0.2s;
+}
+
+.dotContainer:nth-child(4) .dotItem {
+  animation-delay: 0.3s;
+}
+
+.dotContainer:nth-child(5) .dotItem {
+  animation-delay: 0.4s;
+}
+
+.dotContainer:nth-child(6) .dotItem {
+  animation-delay: 0.5s;
+}
+
+.dotContainer:nth-child(7) .dotItem {
+  animation-delay: 0.6s;
+}
+
+.dotContainer:nth-child(8) .dotItem {
+  animation-delay: 0.7s;
+}
+
+.dotContainer:nth-child(9) .dotItem {
+  animation-delay: 0.8s;
+}
+
+.dotContainer:nth-child(10) .dotItem {
+  animation-delay: 0.9s;
+}
+
+.dotContainer:nth-child(11) .dotItem {
+  animation-delay: 1s;
+}
+
+.dotContainer:nth-child(12) .dotItem {
+  animation-delay: 1.1s;
+}

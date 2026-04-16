@@ -1,0 +1,79 @@
+matchers:
+
+  - label: "bug"
+    keywords:
+      - "bug"
+      - "error"
+      - "crash"
+      - "not working"
+      - "fails"
+
+  - label: "enhancement"
+    keywords:
+      - "feature"
+      - "enhancement"
+      - "improvement"
+
+  - label: "documentation"
+    keywords:
+      - "docs"
+      - "documentation"
+      - "readme"
+
+  - label: "question"
+    keywords:
+      - "question"
+      - "how to"
+      - "help"
+
+  - label: "area: frontend"
+    keywords:
+      - "ui"
+      - "frontend"
+      - "tailwind"
+      - "component"
+
+  - label: "area: backend"
+    keywords:
+      - "api"
+      - "backend"
+      - "octokit"
+      - "server"
+
+  - label: "area: ai-logic"
+    keywords:
+      - "gemini"
+      - "prompt"
+      - "token"
+      - "model response"
+
+  - label: "typescript"
+    keywords:
+      - "typescript"
+      - "ts"
+      - "interface"
+
+  - label: "javascript"
+    keywords:
+      - "javascript"
+      - "js"
+
+  - label: "ci/cd"
+    keywords:
+      - "ci"
+      - "cd"
+      - "workflow"
+      - "deploy"
+
+  - label: "security"
+    keywords:
+      - "security"
+      - "vulnerability"
+      - "api key"
+
+  - label: "priority: high"
+    keywords:
+      - "urgent"
+      - "asap"
+      - "high priority"
+      - "blocking"
