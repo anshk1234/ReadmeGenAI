@@ -15,6 +15,8 @@ interface GeneratePageProps {
 export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
   const [markdown, setMarkdown] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [authRequired, setAuthRequired] = useState(false);
 
   // Optional: Update document title for SPA navigation
   useEffect(() => {
@@ -32,6 +34,8 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
   ) => {
     setIsLoading(true);
     setMarkdown("");
+    setErrorMessage(null);
+    setAuthRequired(false);
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -42,15 +46,17 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
       if (!response.ok) {
         const errorText = await response.text();
         let errorMessage: string;
+        let requiresAuth = false;
         try {
           const errorData = JSON.parse(errorText);
           errorMessage = errorData.error || errorData.message || errorText;
+          requiresAuth = Boolean(errorData.authRequired);
         } catch {
           errorMessage = errorText || response.statusText;
         }
-        throw new Error(
-          `[${response.status} ${response.statusText}]: ${errorMessage}`,
-        );
+
+        setAuthRequired(requiresAuth);
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -64,7 +70,9 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
       }
     } catch (error: unknown) {
       console.error("Generation Error:", error);
-      alert(error instanceof Error ? error.message : "Something went wrong");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Something went wrong",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -85,6 +93,8 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           isLoading={isLoading}
           initialValue={repoSlug ? `https://github.com/${repoSlug}` : ""}
           ariaLabel="Enter GitHub repository URL to generate README"
+          serverError={errorMessage}
+          authRequired={authRequired}
         />
         <MarkdownPreview content={markdown} />
       </main>

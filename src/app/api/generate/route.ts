@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import { NextRequest, NextResponse } from "next/server";
 import { getGeminiModel } from "@/lib/gemini";
-import { getRepoData, getRepoContents } from "@/lib/octokit";
-import { SUPPORTED_LANGUAGES } from "@/constants/languages";
+import { getRepoSnapshot, RepoAccessError } from "@/lib/octokit";
 
 export const dynamic = "force-dynamic";
 
@@ -9,10 +9,10 @@ export const dynamic = "force-dynamic";
  * AI README Generation Endpoint
  * Optimized for data accuracy, clean prompt interpolation, and multi-language support.
  *
- * @param {Request} req - The incoming Next.js/standard Web API Request object containing the repo URL and optional language.
+ * @param {NextRequest} req - The incoming Next.js request object containing the repo URL and optional language.
  * @returns {Promise<NextResponse>} A JSON response containing the generated Markdown or an error message.
  */
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   let rawUrl: string;
   let language: string;
   try {
@@ -63,13 +63,21 @@ export async function POST(req: Request) {
       );
     }
 
-    const [repoInfo, repoContents] = await Promise.all([
-      getRepoData(owner, repo),
-      getRepoContents(owner, repo),
-    ]);
+    const token = await getToken({
+      req,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
+    const accessToken =
+      typeof token?.accessToken === "string" ? token.accessToken : undefined;
+
+    const { repoInfo, repoContents } = await getRepoSnapshot(
+      owner,
+      repo,
+      accessToken,
+    );
 
     const files = Array.isArray(repoContents)
-      ? repoContents.map((f: { name: string }) => f.name)
+      ? repoContents.map((f: { path: string }) => f.path)
       : [];
     const fileListString =
       files.length > 0 ? files.join(", ") : "Standard repository structure";
@@ -158,6 +166,16 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ markdown: cleanMarkdown });
   } catch (error: unknown) {
+    if (error instanceof RepoAccessError) {
+      return NextResponse.json(
+        {
+          error: error.message,
+          authRequired: error.code === "AUTH_REQUIRED",
+        },
+        { status: error.status },
+      );
+    }
+
     const message =
       error instanceof Error ? error.message : "Internal Server Error";
     console.error("README Generation Failed:", message);

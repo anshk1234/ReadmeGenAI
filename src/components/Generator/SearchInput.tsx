@@ -2,13 +2,15 @@
 import React, { useState } from "react";
 import { Loader2, Github, AlertCircle } from "lucide-react";
 import { Button } from "../ui/Button";
-import { SUPPORTED_LANGUAGES } from "@/constants/languages";
+import GitHubLoginButton from "../GitHubLoginButton";
 
 interface SearchInputProps {
   onGenerate: (url: string, language: string) => void;
   isLoading: boolean;
   initialValue?: string; // optional initial value
   ariaLabel?: string; // optional aria-label for accessibility
+  serverError?: string | null;
+  authRequired?: boolean;
 }
 
 /**
@@ -23,6 +25,8 @@ export const SearchInput = ({
   isLoading,
   initialValue,
   ariaLabel,
+  serverError,
+  authRequired = false,
 }: SearchInputProps) => {
   // Initialize state directly from initialValue once
   const [url, setUrl] = useState(initialValue || "");
@@ -112,10 +116,17 @@ export const SearchInput = ({
           </Button>
         </div>
       </form>
-      {error && (
-        <div className="mt-4 flex items-center gap-2 text-red-400 text-sm animate-in fade-in slide-in-from-top-1">
-          <AlertCircle size={14} />
-          {error}
+      {(error || serverError) && (
+        <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm animate-in fade-in slide-in-from-top-1">
+          <div className="flex items-center gap-2 text-red-300">
+            <AlertCircle size={14} />
+            {error || serverError}
+          </div>
+          {authRequired && (
+            <div className="mt-3">
+              <GitHubLoginButton />
+            </div>
+          )}
         </div>
       )}
     </div>
