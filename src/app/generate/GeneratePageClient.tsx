@@ -48,18 +48,23 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
         let errorMessage: string;
         let requiresAuth = false;
-        try {
-          const errorData = JSON.parse(errorText);
-          errorMessage = errorData.error || errorData.message || errorText;
+        const contentType = response.headers.get("content-type") || "";
+
+        if (contentType.includes("application/json")) {
+          const errorData = await response.json();
+          errorMessage =
+            errorData.message || errorData.error || response.statusText;
           requiresAuth = Boolean(errorData.authRequired);
           setPrivateRepoConsentRequired(
             errorData.error === "private_repo_consent_required",
           );
-        } catch {
-          errorMessage = errorText || response.statusText;
+        } else {
+          const errorText = await response.text();
+          console.error("Non-JSON error response from /api/generate:", errorText);
+          errorMessage =
+            "The server hit an unexpected error while generating the README. Please try again, and check the local server logs if it keeps happening.";
         }
 
         setAuthRequired(requiresAuth);

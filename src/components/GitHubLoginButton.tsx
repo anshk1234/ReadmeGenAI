@@ -4,10 +4,12 @@ import { Github, LogIn, LogOut } from "lucide-react";
 
 type GitHubLoginButtonProps = {
   onBeforeSignIn?: () => void;
+  showScopeNote?: boolean;
 };
 
 export default function GitHubLoginButton({
   onBeforeSignIn,
+  showScopeNote = false,
 }: GitHubLoginButtonProps) {
   const { data: session, status } = useSession();
   const displayName =
@@ -46,10 +48,12 @@ export default function GitHubLoginButton({
         <LogIn size={14} />
         Login with GitHub
       </button>
-      <p className="text-xs text-neutral-400">
-        We request GitHub’s “repo” scope to read private repo contents for
-        README generation.
-      </p>
+      {showScopeNote && (
+        <p className="text-xs text-neutral-400">
+          We request GitHub’s “repo” scope to read private repo contents for
+          README generation.
+        </p>
+      )}
     </div>
   );
 }

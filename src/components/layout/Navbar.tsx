@@ -29,19 +29,21 @@ export const Navbar = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 group cursor-pointer"
-            aria-label="ReadmeGenAI Home"
-          >
-            <div className="relative w-9 h-9 bg-white rounded-lg flex items-center justify-center overflow-hidden transition-transform group-hover:rotate-3">
-              <span className="text-black font-black text-xl">R</span>
-            </div>
-            <span className="font-bold text-xl tracking-tighter">
-              ReadmeGenAI
-            </span>
-          </Link>
+          <div className="flex flex-1 items-center">
+            {/* Brand Logo */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 group cursor-pointer"
+              aria-label="ReadmeGenAI Home"
+            >
+              <div className="relative w-9 h-9 bg-white rounded-lg flex items-center justify-center overflow-hidden transition-transform group-hover:rotate-3">
+                <span className="text-black font-black text-xl">R</span>
+              </div>
+              <span className="font-bold text-xl tracking-tighter">
+                ReadmeGenAI
+              </span>
+            </Link>
+          </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center justify-center space-x-1">

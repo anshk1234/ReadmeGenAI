@@ -84,8 +84,8 @@ export async function POST(req: NextRequest) {
         {
           error: "private_repo_consent_required",
           message:
-            "This repository appears to be private. Confirm consent to send private repository data to the AI model by re-submitting with { ackPrivateRepo: true }.",
-          authRequired: Boolean(accessToken),
+            "This repository is private. Check the consent box below, then click Generate again to continue.",
+          authRequired: false,
         },
         { status: 403 },
       );

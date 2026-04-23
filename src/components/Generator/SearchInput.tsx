@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Loader2, Github, AlertCircle } from "lucide-react";
+import { Loader2, Github, AlertCircle, ShieldAlert } from "lucide-react";
 import { Button } from "../ui/Button";
 import GitHubLoginButton from "../GitHubLoginButton";
 
@@ -58,6 +58,13 @@ export const SearchInput = ({
       /^https?:\/\/(www\.)?github\.com\/[\w.-]+\/[\w.-]+\/?$/;
 
     if (githubUrlPattern.test(url.trim())) {
+      if (privateRepoConsentRequired && !ackPrivateRepo) {
+        setError(
+          "Please confirm the private repository consent checkbox, then click Generate again.",
+        );
+        return;
+      }
+
       onGenerate(url.trim(), language, ackPrivateRepo);
     } else {
       setError("Please enter a valid GitHub repository URL.");
@@ -79,6 +86,7 @@ export const SearchInput = ({
             value={url}
             onChange={(e) => {
               setUrl(e.target.value);
+              if (ackPrivateRepo) setAckPrivateRepo(false);
               if (error) setError(null);
             }}
             placeholder="https://github.com/username/repo"
@@ -120,21 +128,44 @@ export const SearchInput = ({
         </div>
       </form>
       {privateRepoConsentRequired && (
-        <div className="flex items-start gap-3 rounded-2xl border border-yellow-500/20 bg-yellow-500/10 px-4 py-3 text-sm text-yellow-200">
-          <input
-            id="private-repo-consent"
-            type="checkbox"
-            checked={ackPrivateRepo}
-            onChange={(e) => setAckPrivateRepo(e.target.checked)}
-            className="mt-1 h-4 w-4 accent-yellow-400"
-          />
-          <label htmlFor="private-repo-consent" className="leading-relaxed">
-            I understand this repository is private and consent to send its
-            metadata and file list to the AI model for README generation.
-          </label>
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-4 text-sm text-amber-100">
+          <div className="flex items-start gap-3">
+            <ShieldAlert size={18} className="mt-0.5 shrink-0 text-amber-300" />
+            <div className="space-y-3">
+              <div>
+                <p className="font-semibold text-amber-50">
+                  Private repository confirmation required
+                </p>
+                <p className="mt-1 leading-relaxed text-amber-100/90">
+                  To generate a README, we need to send this private
+                  repository&apos;s metadata and top-level file list to the AI
+                  model. Confirm below, then click Generate again.
+                </p>
+              </div>
+              <label
+                htmlFor="private-repo-consent"
+                className="flex items-start gap-3 leading-relaxed"
+              >
+                <input
+                  id="private-repo-consent"
+                  type="checkbox"
+                  checked={ackPrivateRepo}
+                  onChange={(e) => {
+                    setAckPrivateRepo(e.target.checked);
+                    if (error) setError(null);
+                  }}
+                  className="mt-1 h-4 w-4 accent-amber-400"
+                />
+                <span>
+                  I understand and consent to sending private repository
+                  metadata and file names for README generation.
+                </span>
+              </label>
+            </div>
+          </div>
         </div>
       )}
-      {(error || serverError) && (
+      {(error || (serverError && !privateRepoConsentRequired)) && (
         <div className="mt-4 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm animate-in fade-in slide-in-from-top-1">
           <div className="flex items-center gap-2 text-red-300">
             <AlertCircle size={14} />
