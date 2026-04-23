@@ -15,10 +15,12 @@ export const dynamic = "force-dynamic";
 export async function POST(req: NextRequest) {
   let rawUrl: string;
   let language: string;
+  let ackPrivateRepo = false;
   try {
     const body = await req.json();
     rawUrl = body.url;
     language = body.language || "English";
+    ackPrivateRepo = Boolean(body.ackPrivateRepo);
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
@@ -75,6 +77,19 @@ export async function POST(req: NextRequest) {
       repo,
       accessToken,
     );
+
+    const isPrivateRepo = Boolean(repoInfo?.private);
+    if (isPrivateRepo && !ackPrivateRepo) {
+      return NextResponse.json(
+        {
+          error: "private_repo_consent_required",
+          message:
+            "This repository appears to be private. Confirm consent to send private repository data to the AI model by re-submitting with { ackPrivateRepo: true }.",
+          authRequired: Boolean(accessToken),
+        },
+        { status: 403 },
+      );
+    }
 
     const files = Array.isArray(repoContents)
       ? repoContents.map((f: { path: string }) => f.path)

@@ -32,7 +32,7 @@ export const Navbar = ({
           {/* Brand Logo */}
           <Link
             href="/"
-            className="flex flex-1 items-center gap-3 group cursor-pointer"
+            className="flex items-center gap-3 group cursor-pointer"
             aria-label="ReadmeGenAI Home"
           >
             <div className="relative w-9 h-9 bg-white rounded-lg flex items-center justify-center overflow-hidden transition-transform group-hover:rotate-3">
@@ -97,10 +97,17 @@ export const Navbar = ({
               {link.name}
             </a>
           ))}
-          <GitHubLoginButton />
-          <Button variant="primary" className="w-full justify-center mt-4">
-            <Github size={18} /> Star our Repo
-          </Button>
+          <GitHubLoginButton onBeforeSignIn={() => setIsMenuOpen(false)} />
+          <a
+            href="https://github.com/BeyteFlow/ReadmeGenAI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full"
+          >
+            <Button variant="primary" className="w-full justify-center mt-4">
+              <Github size={18} /> Star our Repo
+            </Button>
+          </a>
         </div>
       )}
     </nav>

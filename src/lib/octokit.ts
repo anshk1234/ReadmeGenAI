@@ -18,10 +18,8 @@ export class RepoAccessError extends Error {
 }
 
 function createOctokit(accessToken?: string): Octokit {
-  const auth = accessToken || process.env.GITHUB_TOKEN;
-
   return new Octokit({
-    auth: auth || undefined,
+    auth: accessToken || undefined,
     request: {
       headers: {
         "X-GitHub-Api-Version": "2022-11-28",
@@ -42,9 +40,17 @@ function toRepoAccessError(
       ? error.status
       : 500;
 
+  if (status === 401) {
+    return new RepoAccessError(
+      "Access token expired or invalid. Please re-authenticate with GitHub.",
+      401,
+      "AUTH_REQUIRED",
+    );
+  }
+
   if ((status === 403 || status === 404) && !hasUserAccessToken) {
     return new RepoAccessError(
-      "This repository is private. Please log in with GitHub to continue.",
+      "Repository not accessible. It may be private or unavailable. Log in with GitHub if you need access to a private repository.",
       401,
       "AUTH_REQUIRED",
     );
@@ -91,8 +97,10 @@ export async function getRepoSnapshot(
       tree_sha: repoInfo.default_branch,
     });
 
+    type RepoTreeItem = (typeof repoTree.tree)[number];
     const repoContents = repoTree.tree.filter(
-      (item) => item.path && !item.path.includes("/"),
+      (item): item is RepoTreeItem & { path: string } =>
+        typeof item.path === "string" && !item.path.includes("/"),
     );
 
     return {

@@ -17,6 +17,8 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [authRequired, setAuthRequired] = useState(false);
+  const [privateRepoConsentRequired, setPrivateRepoConsentRequired] =
+    useState(false);
 
   // Optional: Update document title for SPA navigation
   useEffect(() => {
@@ -31,16 +33,18 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
   const handleGenerate = async (
     githubUrl: string,
     language: string = "English",
+    ackPrivateRepo: boolean = false,
   ) => {
     setIsLoading(true);
     setMarkdown("");
     setErrorMessage(null);
     setAuthRequired(false);
+    setPrivateRepoConsentRequired(false);
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: githubUrl, language }),
+        body: JSON.stringify({ url: githubUrl, language, ackPrivateRepo }),
       });
 
       if (!response.ok) {
@@ -51,6 +55,9 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           const errorData = JSON.parse(errorText);
           errorMessage = errorData.error || errorData.message || errorText;
           requiresAuth = Boolean(errorData.authRequired);
+          setPrivateRepoConsentRequired(
+            errorData.error === "private_repo_consent_required",
+          );
         } catch {
           errorMessage = errorText || response.statusText;
         }
@@ -95,6 +102,7 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           ariaLabel="Enter GitHub repository URL to generate README"
           serverError={errorMessage}
           authRequired={authRequired}
+          privateRepoConsentRequired={privateRepoConsentRequired}
         />
         <MarkdownPreview content={markdown} />
       </main>
