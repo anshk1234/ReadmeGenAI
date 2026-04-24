@@ -92,7 +92,11 @@ export const SearchInput = ({
             value={url}
             onChange={(e) => {
               setUrl(e.target.value);
-              if (privateRepoConsentRequired) {
+              if (
+                privateRepoConsentRequired ||
+                authRequired ||
+                Boolean(serverError)
+              ) {
                 onClearPrivateRepoConsent();
               }
               if (ackPrivateRepo) {

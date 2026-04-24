@@ -48,13 +48,13 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
       });
 
       if (!response.ok) {
-        let errorMessage: string;
+        let extractedMessage: string;
         let requiresAuth = false;
         const contentType = response.headers.get("content-type") || "";
 
         if (contentType.includes("application/json")) {
           const errorData = await response.json();
-          errorMessage =
+          extractedMessage =
             errorData.message || errorData.error || response.statusText;
           requiresAuth = Boolean(errorData.authRequired);
           setPrivateRepoConsentRequired(
@@ -63,12 +63,12 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
         } else {
           const errorText = await response.text();
           console.error("Non-JSON error response from /api/generate:", errorText);
-          errorMessage =
+          extractedMessage =
             "The server hit an unexpected error while generating the README. Please try again, and check the local server logs if it keeps happening.";
         }
 
         setAuthRequired(requiresAuth);
-        throw new Error(errorMessage);
+        throw new Error(extractedMessage);
       }
 
       const data = await response.json();
@@ -90,8 +90,10 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
     }
   };
 
-  const clearPrivateRepoConsent = () => {
+  const clearGenerateFormState = () => {
     setPrivateRepoConsentRequired(false);
+    setErrorMessage(null);
+    setAuthRequired(false);
   };
 
   return (
@@ -112,7 +114,7 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           serverError={errorMessage}
           authRequired={authRequired}
           privateRepoConsentRequired={privateRepoConsentRequired}
-          onClearPrivateRepoConsent={clearPrivateRepoConsent}
+          onClearPrivateRepoConsent={clearGenerateFormState}
         />
         <MarkdownPreview content={markdown} />
       </main>
