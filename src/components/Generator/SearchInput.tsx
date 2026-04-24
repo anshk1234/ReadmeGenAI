@@ -6,6 +6,7 @@ import GitHubLoginButton from "../GitHubLoginButton";
 
 interface SearchInputProps {
   onGenerate: (url: string, language: string, ackPrivateRepo: boolean) => void;
+  onClearPrivateRepoConsent: () => void;
   isLoading: boolean;
   initialValue?: string; // optional initial value
   ariaLabel?: string; // optional aria-label for accessibility
@@ -23,6 +24,7 @@ interface SearchInputProps {
  */
 export const SearchInput = ({
   onGenerate,
+  onClearPrivateRepoConsent,
   isLoading,
   initialValue,
   ariaLabel,
@@ -65,6 +67,10 @@ export const SearchInput = ({
         return;
       }
 
+      if (privateRepoConsentRequired && ackPrivateRepo) {
+        onClearPrivateRepoConsent();
+      }
+
       onGenerate(url.trim(), language, ackPrivateRepo);
     } else {
       setError("Please enter a valid GitHub repository URL.");
@@ -86,7 +92,12 @@ export const SearchInput = ({
             value={url}
             onChange={(e) => {
               setUrl(e.target.value);
-              if (ackPrivateRepo) setAckPrivateRepo(false);
+              if (privateRepoConsentRequired) {
+                onClearPrivateRepoConsent();
+              }
+              if (ackPrivateRepo) {
+                setAckPrivateRepo(false);
+              }
               if (error) setError(null);
             }}
             placeholder="https://github.com/username/repo"

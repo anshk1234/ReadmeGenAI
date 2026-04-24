@@ -90,6 +90,10 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
     }
   };
 
+  const clearPrivateRepoConsent = () => {
+    setPrivateRepoConsentRequired(false);
+  };
+
   return (
     <div className="relative min-h-screen bg-black text-white">
       {/* UI LOADING OVERLAY 
@@ -108,6 +112,7 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           serverError={errorMessage}
           authRequired={authRequired}
           privateRepoConsentRequired={privateRepoConsentRequired}
+          onClearPrivateRepoConsent={clearPrivateRepoConsent}
         />
         <MarkdownPreview content={markdown} />
       </main>
