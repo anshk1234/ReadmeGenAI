@@ -1,9 +1,14 @@
 import type { NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 
+const isBuildPhase = process.env.NEXT_PHASE === "phase-production-build";
+
 function requireEnv(name: string): string {
   const value = process.env[name];
   if (!value) {
+    if (isBuildPhase) {
+      return "";
+    }
     throw new Error(`Missing required environment variable: ${name}`);
   }
   return value;
