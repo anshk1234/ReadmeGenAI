@@ -62,7 +62,10 @@ export default function GeneratePageClient({ repoSlug }: GeneratePageProps) {
           );
         } else {
           const errorText = await response.text();
-          console.error("Non-JSON error response from /api/generate:", errorText);
+          console.error(
+            "Non-JSON error response from /api/generate:",
+            errorText,
+          );
           extractedMessage =
             "The server hit an unexpected error while generating the README. Please try again, and check the local server logs if it keeps happening.";
         }
